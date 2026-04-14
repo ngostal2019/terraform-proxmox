@@ -1,15 +1,18 @@
 # Step to integrate Terraform and Proxmox PVE V9.1.7
 ---
-## Add a user, role with the necessary permissions access and attached
+## Add a user, role with the necessary permissions access and assign the role to the user
 
 ```sh
 pveum role add TerraformProv -privs "Datastore.AllocateSpace Datastore.AllocateTemplate Datastore.Audit Pool.Allocate Pool.Audit Sys.Audit Sys.Console Sys.Modify VM.Allocate VM.Audit VM.Clone VM.Config.CDROM VM.Config.Cloudinit VM.Config.CPU VM.Config.Disk VM.Config.HWType VM.Config.Memory VM.Config.Network VM.Config.Options VM.Migrate VM.PowerMgmt SDN.Use"
 pveum user add terraform-prov@pve --password <password>
 pveum aclmod / -user terraform-prov@pve -role TerraformProv
-pveum user token add terraform-prov@pve <token_name>
 ```
 ---
-## After generating the token, a table will appear.
+## Generate a token for Terraform authentication
+### After generating the token, a table will appear.
+```sh
+pveum user token add terraform-prov@pve <token_name>
+```
 |key|value|
 |---|-----|
 |full-tokenid|terraform-prov@pve!token_name|
